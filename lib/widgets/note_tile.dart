@@ -85,7 +85,10 @@ class _TitleRow extends StatelessWidget {
           child: Text(
             note.title,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
           ),
         ),
         if (note.isPinned) const Icon(Icons.push_pin, size: 16),
@@ -97,17 +100,20 @@ class _TitleRow extends StatelessWidget {
 class _FooterRow extends StatelessWidget {
   final Note note;
   final Color categoryColor;
-  const _FooterRow({Key? key, required this.note, required this.categoryColor})
-      : super(key: key);
+  const _FooterRow({
+    Key? key,
+    required this.note,
+    required this.categoryColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _CategoryChip(label: note.category, color: categoryColor),
+        _InlineCategoryChip(label: note.category, color: categoryColor),
         Row(
-          mainAxisSize: MainAxisSize.min, // <— only wrap its children
+          mainAxisSize: MainAxisSize.min,
           children: [
             if (note.imagePaths.isNotEmpty)
               const Padding(
@@ -115,7 +121,6 @@ class _FooterRow extends StatelessWidget {
                 child: Icon(Icons.attach_file, size: 18),
               ),
             InkWell(
-              // <— minimal touch target
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_) => NoteFormPage(initialNote: note),
@@ -163,11 +168,15 @@ class _FooterRow extends StatelessWidget {
   }
 }
 
-class _CategoryChip extends StatelessWidget {
+/// Small, italic chip used in grid tiles
+class _InlineCategoryChip extends StatelessWidget {
   final String label;
   final Color color;
-  const _CategoryChip({Key? key, required this.label, required this.color})
-      : super(key: key);
+  const _InlineCategoryChip({
+    Key? key,
+    required this.label,
+    required this.color,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +189,7 @@ class _CategoryChip extends StatelessWidget {
       child: Text(
         label,
         style: const TextStyle(
-          fontSize: 16,
+          fontSize: 14,
           fontStyle: FontStyle.italic,
         ),
       ),
@@ -192,6 +201,19 @@ class _DetailSheet extends StatelessWidget {
   final Note note;
   const _DetailSheet({Key? key, required this.note}) : super(key: key);
 
+  Color _colorForCategory(String cat) {
+    switch (cat.toLowerCase()) {
+      case 'work':
+        return const Color(0xFFFFF9C4);
+      case 'personal':
+        return const Color(0xFFB3E5FC);
+      case 'study':
+        return const Color(0xFFFFCDD2);
+      default:
+        return Colors.grey.shade300;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -199,25 +221,11 @@ class _DetailSheet extends StatelessWidget {
       initialChildSize: 0.4,
       minChildSize: 0.3,
       maxChildSize: 0.9,
-      builder: (ctx, ctrl) {
-        final bgColor = const Color(0xFFFFF6FF);
-        Color _colorForCat(String cat) {
-          switch (cat.toLowerCase()) {
-            case 'work':
-              return const Color(0xFFFFF9C4);
-            case 'personal':
-              return const Color(0xFFB3E5FC);
-            case 'study':
-              return const Color(0xFFFFCDD2);
-            default:
-              return Colors.grey.shade300;
-          }
-        }
-
+      builder: (_, ctrl) {
         return Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: bgColor,
+            color: const Color(0xFFFFF6FF),
             borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
@@ -232,12 +240,14 @@ class _DetailSheet extends StatelessWidget {
                       child: Text(
                         note.title,
                         style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    _CategoryChip(
+                    _DetailCategoryChip(
                       label: note.category,
-                      color: _colorForCat(note.category),
+                      color: _colorForCategory(note.category),
                     ),
                   ],
                 ),
@@ -269,6 +279,36 @@ class _DetailSheet extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+/// Larger, non-italic chip used in detail sheet
+class _DetailCategoryChip extends StatelessWidget {
+  final String label;
+  final Color color;
+  const _DetailCategoryChip({
+    Key? key,
+    required this.label,
+    required this.color,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          fontSize: 16,
+          fontStyle: FontStyle.normal,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
     );
   }
 }
