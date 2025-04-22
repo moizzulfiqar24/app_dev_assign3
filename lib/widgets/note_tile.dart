@@ -179,7 +179,10 @@ class _CategoryChip extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: const TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+        style: const TextStyle(
+          fontSize: 16,
+          fontStyle: FontStyle.italic,
+        ),
       ),
     );
   }

@@ -28,6 +28,7 @@ class _NotesListPageState extends State<NotesListPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        centerTitle: false,
         title: const Text(
           'NoteIt',
           style: TextStyle(
