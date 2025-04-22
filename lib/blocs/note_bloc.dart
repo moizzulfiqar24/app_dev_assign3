@@ -1,9 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-
 import '../models/note_model.dart';
 import '../utils/shared_pref_util.dart';
-
 part 'note_event.dart';
 part 'note_state.dart';
 

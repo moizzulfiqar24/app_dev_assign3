@@ -1,11 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../models/note_model.dart';
 import '../blocs/note_bloc.dart';
-
 import '../widgets/title_field.dart';
 import '../widgets/content_field.dart';
 import '../widgets/category_dropdown.dart';

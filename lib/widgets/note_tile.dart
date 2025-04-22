@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../models/note_model.dart';
 import '../blocs/note_bloc.dart';
 import '../pages/note_form_page.dart';
@@ -168,7 +167,6 @@ class _FooterRow extends StatelessWidget {
   }
 }
 
-/// Small, italic chip used in grid tiles
 class _InlineCategoryChip extends StatelessWidget {
   final String label;
   final Color color;
@@ -283,7 +281,6 @@ class _DetailSheet extends StatelessWidget {
   }
 }
 
-/// Larger, non-italic chip used in detail sheet
 class _DetailCategoryChip extends StatelessWidget {
   final String label;
   final Color color;

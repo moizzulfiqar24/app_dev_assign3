@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'blocs/note_bloc.dart';
 import 'pages/notes_list_page.dart';
 
